@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           `You are now logged in`
         );
 
-        this.router.navigateByUrl('/user');
+        this.router.navigateByUrl('/');
       }
     }, error => {
 

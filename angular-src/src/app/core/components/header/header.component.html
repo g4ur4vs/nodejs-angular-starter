@@ -1,23 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top box-shadow">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top box-shadow">
     <div class="container">
         <a class="navbar-brand" href="#">
-          NodeJS-Angular-Starter
-      </a>
+          Special School Management System
+        </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    <a class="nav-link" routerLink="/">Home
-          <span class="sr-only">(current)</span>
-        </a>
+                <li class="nav-item" *ngIf="appService.user" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/" href="/">Home
+                        <span class="sr-only">(current)</span>    
+                    </a>
                 </li>
-
-                <li class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="/example">Example</a>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" *ngIf="appService.user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link " routerLink="/" href="# " (click)="logout() ">Logout</a>
                 </li>
             </ul>
         </div>
