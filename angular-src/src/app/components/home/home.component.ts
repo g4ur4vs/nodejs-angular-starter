@@ -3,6 +3,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 import { AppService, AuthService } from '../../core/services';
+import { UserProfile } from '../../../../../shared/models';
+import { LocalStorageService } from '../../core/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -11,17 +13,27 @@ import { AppService, AuthService } from '../../core/services';
 })
 export class HomeComponent implements OnInit {
 
+  public user: UserProfile;
+
   constructor(
     public appService: AppService,
     private router: Router,
     private authService: AuthService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private storageService: LocalStorageService
   ) { }
 
   ngOnInit() {
 
-    if(!this.appService.user){
-      this.router.navigateByUrl("/login")
+    this.user = this.storageService.getFromLocalStorage('user');
+
+    if (!this.user.firstName) {
+      this.toastService.error('Session Expired', 'Please Re-Login');
+      this.router.navigateByUrl("/login");
+    } else {
+
+      this.authService.user = this.user;
+      console.log(this.user);
     }
   }
 

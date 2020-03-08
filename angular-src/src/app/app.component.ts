@@ -25,6 +25,8 @@ export class AppComponent {
       this.router.events.subscribe(this.navigationInterceptor.bind(this));
   }
 
+  public data:any=[]
+
   private isAppLoading = false;
 
   get isLoading() {

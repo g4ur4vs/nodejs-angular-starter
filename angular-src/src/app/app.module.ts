@@ -13,6 +13,8 @@ import { UserPageComponent } from './components/user-page/user-page.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { RegisterComponent } from './components/register/register.component';
+import { StorageServiceModule} from 'ngx-webstorage-service';
+import { LocalStorageService } from './core/services/storage.service';
 
 const routes: Route[] = [
   {
@@ -57,12 +59,13 @@ const routes: Route[] = [
   ],
   imports: [
     CommonModule,
+    StorageServiceModule,
     NgtUniversalModule,
     SharedModule,
     CoreModule,
     RouterModule.forRoot(routes, { enableTracing: false, initialNavigation: 'enabled' }),
     FormsModule
   ],
-  providers: []
+  providers: [LocalStorageService]
 })
 export class AppModule {}

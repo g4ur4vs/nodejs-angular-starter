@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 
 import { UserProfile } from '../../../../../shared/models';
 import { ApiService } from './api.service';
+import { LocalStorageService } from './storage.service';
 
 @Injectable()
 export class AuthService {
@@ -46,6 +47,10 @@ export class AuthService {
 
   get isLoggedIn() {
     return this.hasCredentails && !!this._user;
+  }
+
+  get hasCookies() {
+    return this.hasCredentails;
   }
 
   get isLoggedInAsync() {
@@ -93,7 +98,7 @@ export class AuthService {
     return false;
   }
 
-  constructor(private apiService: ApiService, private cookieService: CookieService) {}
+  constructor(private apiService: ApiService, private cookieService: CookieService, private storageService: LocalStorageService) { }
 
   checkLogin(): Observable<UserProfile> {
     if (!this.hasCredentails) {
@@ -121,6 +126,7 @@ export class AuthService {
         result => {
           this.cookieService.put(`auth_token`, result.data.token);
           this.user = result.data.profile;
+          this.storageService.storeOnLocalStorage('user', this.user);
         },
         error => {
           this.userChanged.error(error);
@@ -154,7 +160,7 @@ export class AuthService {
     this.user = null;
     this.cookieService.remove('auth_token');
     this.loginChecked = true;
-
+    this.storageService.removeKey('user');
     // We return a promise so we can notify that everything went well (add your own logout logic if required)
     return Promise.resolve(null);
   }

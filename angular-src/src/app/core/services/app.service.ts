@@ -21,9 +21,13 @@ export class AppService {
     return this.user != null && this.loginChecked;
   }
 
+  get hasCookies(): boolean {
+    return this.authService.hasCookies;
+  }
+
   get loginChecked() {
     return this.authService.loginChecked;
   }
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) { }
 }
